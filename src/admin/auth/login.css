@@ -1,0 +1,33 @@
+.login-container {
+  background-color: #F1FFFB;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  
+  background-color: white;
+  padding: 50px;
+  margin: auto;
+  width: 500px;
+  height: auto;
+  border-radius: 15px;
+  justify-content: center;
+  align-items: center;
+  display: flex; /* Utiliser flexbox pour aligner les éléments horizontalement */
+  flex-direction: column; /* column */
+  gap: 30px; /* Espacement entre les éléments */
+}
+
+.text-field {
+  width: 100%; /* Ajustez la largeur selon vos besoins */
+}
+
+.button {
+  width: 100%;;
+  height: 50px; /* Hauteur du bouton */
+  align-self: center; /* Centrer verticalement */
+}

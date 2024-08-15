@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+/* Dashbord */
+.container{
+  background-color: #282c34;
+  background: scroll;
+  
+}
