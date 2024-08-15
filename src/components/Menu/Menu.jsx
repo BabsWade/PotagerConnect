@@ -1,5 +1,6 @@
 import React from "react";
-import { BiBookAlt, BiLeaf, BiBarChart, BiListCheck, BiChat } from "react-icons/bi";
+import './Menu.css'
+import { BiBookAlt, BiLeaf, BiBarChart, BiListCheck, BiChat, BiSolidDashboard } from "react-icons/bi";
 const Menu = () => {
     return (
         <div className="menu">
@@ -8,23 +9,23 @@ const Menu = () => {
             </div>
             <div className="menu--list">
                 <a href="#" className="item">
-                    <BiBookAlt />
+                    <BiSolidDashboard className="icone-logo" />
                     Dashboard
                 </a>
                 <a href="#" className="item">
-                    <BiLeaf />
+                    <BiLeaf className="icone-logo"/>
                     Plantes
                 </a>
                 <a href="#" className="item">
-                    <BiBarChart />
+                    <BiBarChart className="icone-logo"/>
                     Comptabilité
                 </a>
                 <a href="#" className="item">
-                    <BiListCheck />
+                    <BiListCheck className="icone-logo"/>
                     Commandes
                 </a>
                 <a href="#" className="item">
-                    <BiChat />
+                    <BiChat className="icone-logo"/>
                     Communauté
                 </a>
             </div>

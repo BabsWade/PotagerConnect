@@ -1,0 +1,32 @@
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.titrepage {
+    color: #00523D;
+    font-size: 24px;
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.Recherche {
+    background-color: #ffffff;
+    padding: 7px 5px;
+    box-sizing: 10px;
+    display: flex;
+    align-items: center;
+    border-radius: 15px;
+}
+
+.Recherche input {
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 5px;
+}

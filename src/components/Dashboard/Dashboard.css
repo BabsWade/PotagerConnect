@@ -1,0 +1,304 @@
+.contenu {
+    width: 100%;
+
+}
+
+
+
+.stats {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+}
+
+.carte {
+    flex: 1;
+    background: #00523D;
+    padding: 0px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: 0.5s ease-in-out;
+}
+
+.card-cover {
+    background-color: #00000036;
+
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 14px;
+    color: #ffffff;
+    font-size: 52px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.CardTitre1 {
+    color: #ffffff;
+    display: flex;
+    margin: 0;
+    font-weight: lighter;
+    padding: 0;
+    padding-top: 15px;
+}
+
+.CardTitre2 {
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: bold;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 15px;
+}
+
+.card-titre {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+}
+.qtiteProduit{
+    color: #ff0000;
+    text-align: right;
+    align-items: right;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+}
+.categoriePlantesRup{
+    color: #00523D;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Conteneur principal pour le titre et les cartes */
+.ruptureContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 5px;
+}
+
+/* Styles pour le titre des cartes */
+.titreRupture {
+    font-weight: bold;
+    margin-bottom: 5px;
+    /* Espace entre le titre et les cartes */
+    color: #00523D;
+    /* Couleur du texte du titre */
+}
+
+/* Conteneur pour les cartes et pour que le tableau se place correctement */
+.statsWrapper {
+    display: flex;
+    width: 100%;
+}
+
+/* Conteneur pour les cartes à gauche */
+.statsLeft {
+    width: 70%;
+    /* Largeur de 70% pour les cartes de rupture de stock */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    /* Aligner les cartes à gauche */
+    align-items: flex-start;
+    /* Aligner les cartes en haut */
+}
+
+/* Conteneur pour la carte météo à droite */
+.statsRight {
+    width: 30%;
+    /* Largeur de 30% pour la carte météo */
+    display: flex;
+    justify-content: flex-end;
+    /* Aligner la carte météo à droite */
+}
+
+/* Styles pour les cartes */
+.statsLeft .carteRupture {
+    background: #ffffff;
+    padding: 5px;
+    flex: 1 1 250px;
+    /* Taille minimale et flexibilité */
+    box-sizing: border-box;
+    /* Inclure le padding dans la largeur totale */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.5s ease-in-out;
+    height: fit-content;
+}
+
+/* Styles pour la carte météo */
+.carteMeteo {
+    background: #ffffff;
+    /* Couleur de fond différente pour l'espace météo */
+    flex: 1 1 300px;
+    /* Taille minimale et flexibilité */
+    min-height: 150px;
+    /* Assure que la carte météo a une hauteur minimale */
+    display: flex;
+    margin-left: 10px;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+/* Styles pour l'en-tête de la carte météo */
+.météoHeader {
+    margin-bottom: 5px;
+}
+
+.météoHeader h3 {
+    margin: 0;
+    font-size: 24px;
+    display: contents;
+}
+
+.météoHeader .dateTime {
+    font-size: 14px;
+    color: #00796b;
+    font-weight: bold;
+}
+
+/* Styles pour la météo actuelle */
+.météoCurrent {
+    margin-bottom: 5px;
+}
+
+.météoCurrent .temperature {
+    font-size: 42px;
+    display: contents;
+    font-weight: bolder;
+    color: #00796b;
+}
+
+.météoCurrent .conditions {
+    font-size: 16px;
+
+    display: block;
+    font-weight: bold;
+}
+
+/* Styles pour la prévision météo */
+.météoForecast {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.forecastDay {
+    width: 100%;
+}
+
+.forecastDay .day {
+    font-weight: bold;
+    color: #00796b;
+    font-size: 18px;
+    display: contents;
+}
+
+.forecastDay .condition {
+    font-size: 14px;
+    color: #00796b;
+    
+}
+
+.forecastDay .tempRange {
+    font-size: 12px;
+    color: #00796b;
+    font-weight: bold;
+}
+
+/* Appliquer des coins arrondis uniquement à la première carte */
+.statsLeft .carteRupture:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-right: 1px solid #00523D;
+}
+
+.statsLeft .carteRupture:nth-child(3) {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-left: 1px solid #00523D;
+}
+
+.statsLeft .carteRupture:nth-child(4) {
+    border-radius: 10px;
+    margin-left: 10px;
+}
+
+/* Styles pour l'image */
+.imageProduit {
+    width: 30%;
+    /* Assure que l'image ne dépasse pas la largeur de la carte */
+    height: auto;
+    /* Conserve les proportions de l'image */
+}
+
+/* Styles pour l'espace réservé à la météo */
+.météoPlaceholder {
+    font-size: 18px;
+    font-weight: bold;
+    color: #00796b;
+    margin-bottom: 10px;
+}
+
+/* Styles pour le conteneur du tableau des commandes */
+.tableauContainer {
+    margin-top: 5px;
+    width: 100%;
+    /* Limite la largeur du tableau pour qu'il ne devienne pas trop large */
+    position: relative;
+}
+
+/* Styles pour le tableau des commandes */
+.titreCommandes {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #00523D;
+}
+
+.tableauCommandes {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #00523e1a;
+}
+
+th {
+    background-color: #ffffff;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+    /* Couleur de fond du survol pour les lignes */
+}
+.dashboard{
+    display: flex;
+    gap: 20px;
+  }
+  .contenu-dashboard{
+    background-color: #F1FFFB ;
+    border-radius: 15px;
+    padding: 10px;
+    flex: 1;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: space-between;
+  }
