@@ -1,9 +1,8 @@
 import Login from './admin/auth/login';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import React, { useState } from 'react';
-
 import './App.css';
-import Dashbord from './admin/components/dashbord';
+import Dashboard from './admin/components/dashboard';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -17,8 +16,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/admin/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/admin/dashbord" element={<Dashbord />} />
+        <Route path="/admin/dashbord" element={<Dashboard />} />
         <Route path="/" element={<Navigate to="/accueil" />} />
+        <Route path="/" element={<Login onLogin={handleLogin} />} />
       </Routes>
     </Router>
     

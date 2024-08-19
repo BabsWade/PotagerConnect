@@ -38,8 +38,35 @@
 }
 
 /* Dashbord */
-.container{
-  background-color: #282c34;
-  background: scroll;
+.dashboard{
+  background-color: #00523D;
+  padding: 10px;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
   
+}
+.dashboard-container {
+  background-color: #F1FFFB;
+  background-size: cover;
+  padding: 30px;
+  border-radius: 15px;
+  width: 100%;
+  
+}
+.logo{
+  color: white;
+  margin-right: 30px;
+  margin-left: 10px;
+}
+.head{
+  display: flex;
+}
+.card{
+  display: flex;
+}
+.menu{
+  display: block;
+  padding: 10px;
 }
