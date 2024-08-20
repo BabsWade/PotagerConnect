@@ -1,6 +1,6 @@
 import './App.css';
-import Menu from './components/Menu/Menu';
-import Dashboard from './components/Dashboard/Dashboard';
+import Menu from './Potager/components/Menu/Menu';
+import Dashboard from './Potager/components/Dashboard/Dashboard';
 function App() {
   return (
     <div className="dashboard">
