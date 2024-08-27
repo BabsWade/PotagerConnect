@@ -11,7 +11,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email === 'zo@connect.com' && password === '1234') {
+    if (email === 'potager@.com' && password === '1234') {
       // Si les identifiants sont corrects, redirige vers le tableau de bord
       navigate('/admin/dashbord');
     } else {

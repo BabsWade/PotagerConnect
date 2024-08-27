@@ -25,6 +25,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useEffect,useState } from 'react';
+import axios from 'axios';
 
 const Dashboard = () => {
     const theme = useTheme();
@@ -52,47 +54,78 @@ const Dashboard = () => {
         { label: "Schindler's List", year: 1993 },
         { label: 'Pulp Fiction', year: 1994 },]
        
-    //data potager  
-    const columns = [
-        { field: 'id', headerName: 'ID', width: 50 },
-        { field: 'nomPotager', headerName: 'Nom Potager', width: 90 },
-        { field: 'telephone', headerName: 'Télephone', width: 100 },
+    //Backend avec Spring boot Affichage des donnee
+      const [rows, setRows] = useState([]);
+    
+      useEffect(() => {
+        // Récupérer les données depuis l'API
+        axios.get('http://localhost:8080/api/potagers/all')
+          .then(response => {// Transformez les données pour ajouter un identifiant unique
+             const rowsWithId = response.data.map((item) => ({
+              id: item.id_potager,  // Assurez-vous que `id_potager` est unique
+              ...item
+            }));
+            console.log("Données récupérées :", rowsWithId); // Vérifiez la structure ici
+            setRows(rowsWithId);
+          })
+          .catch(error => {
+            console.error('Erreur lors de la récupération des données :', error);
+          });
+      }, []);
+    
+      const columns = [
+        { field: 'id_potager', headerName: 'ID', width: 100 },
+        { field: 'nom_potager', headerName: 'Nom Potager', width: 200 },
+        { field: 'telephone', headerName: 'Téléphone', width: 200 },
+        { field: 'ville', headerName: 'Ville', width: 200 },
+        { field: 'adresse', headerName: 'Adresse', width: 200 },
         {
-          field: 'ville',
-          headerName: 'Ville',
-          type: 'string',
-          with: 90,
-        },
-        {
-          field: 'adresse',
-          headerName: 'Adresse',
-          description: 'Adresse du potager.',
+          field: 'prenom_proprietaire',
+          headerName: 'Prenom Proprietaire',
+          description: 'Prenom Proprietaire',
           sortable: false,
-          with: 100,
-          valueGetter: (value, row) => `${row.telephone || ''} ${row.nomPotager || ''}`,
-        },
-          {
-            field: 'nomComplet',
-            headerName: 'Nom Complet',
-            description: 'Nom Complet du Proprietaire.',
-            sortable: false,
-            with: '100%',
-            valueGetter: (value, row) => `${row.prenomProprietaire || ''} ${row.nomProprietaire|| ''}`,
-          }
-      ];
+          width: 200
       
-      const rows = [
-        { id: 1, nomPotager: 'Snow', telephone: 'Jon', ville: 35, adresse:'10eme Riaom' ,nomProprietaire:'Diop',prenomProprietaire:'Babacar'},
-        { id: 2, nomPotager: 'Lannister', telephone: 'Cersei', ville: 42 ,adresse:'10eme Riaom', nomProprietaire:'Diop',prenomProprietaire:'Babacar'},
-        { id: 3, nomPotager: 'Lannister', telephone: 'Jaime', ville: 45,adresse:'10eme Riaom', nomProprietaire:'Diop',prenomProprietaire:'Babacar' },
-        { id: 4, nomPotager: 'Stark', telephone: 'Arya', ville: 16, adresse:'10eme Riaom',nomProprietaire:'Diop',prenomProprietaire:'Babacar' },
-        { id: 5, nomPotager: 'Targaryen', telephone: 'Daenerys', ville: null,adresse:'10eme Riaom', nomProprietaire:'Diop',prenomProprietaire:'Babacar' },
-        { id: 6, nomPotager: 'Melisandre', telephone: null, ville: 150,adresse:'10eme Riaom', nomProprietaire:'Diop',prenomProprietaire:'Babacar' },
-        { id: 7, nomPotager: 'Clifford', telephone: 'Ferrara', ville: 44,adresse:'10eme Riaom', nomProprietaire:'Diop',prenomProprietaire:'Babacar' },
-        { id: 8, nomPotager: 'Frances', telephone: 'Rossini', ville: 36,adresse:'10eme Riaom', nomProprietaire:'Diop',prenomProprietaire:'Babacar' },
-        { id: 9, nomPotager: 'Roxie', telephone: 'Harvey', ville: 65,adresse:'10eme Riaom',nomProprietaire:'Diop',prenomProprietaire:'Babacar' },
+        },{
+          field: 'nom_proprietaire',
+          headerName: 'Nom Proprietaire',
+          description: 'Nom du Propriétaire',
+          sortable: false,
+          width: 200
+      
+        }
       ];
-     
+
+    //Ajouyter les donnee dans la bd
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.currentTarget);
+      const formJson = Object.fromEntries(formData.entries());
+  
+      try {
+          // Envoyer les données au serveur
+          await axios.post('http://localhost:8080/api/potagers', formJson);
+          // Fermer la boîte de dialogue après l'ajout
+          handleCloseAdd();
+      } catch (error) {
+          console.error('Erreur lors de l\'ajout du potager:', error);
+      }
+  };
+
+  //Suppression des donnee de la base de donnee
+  const [selectedRowId, setSelectedRowId] = useState(null);
+  const handleDelete = async () => {
+    console.log("ID sélectionné pour suppression :", selectedRowId);
+    try {
+      await axios.delete(`http://localhost:8080/api/potagers/${selectedRowId}`);
+      setRows(rows.filter(row => row.id !== selectedRowId));
+      setOpenDelete(false);
+    } catch (error) {
+      console.error('Erreur lors de la suppression du potager :', error);
+    }
+  };
+  
+
     // Fonction de déconnexion
     const navigate = useNavigate();
     const handleLogout = () => {
@@ -107,10 +140,6 @@ const Dashboard = () => {
     const [openDelete, setOpenDelete] = React.useState(false);
     const [openAdd, setOpenAdd] = React.useState(false);
 
-    //Boite de dialog Suppression
-    const handleClickOpenDelete = () => {
-        setOpenDelete(true);
-    };
 
     const handleCloseDelete = () => {
         setOpenDelete(false);
@@ -124,6 +153,7 @@ const Dashboard = () => {
     const handleCloseAdd = () => {
         setOpenAdd(false);
     };
+
 
   return (
     <div className='dashboard'>
@@ -237,7 +267,7 @@ const Dashboard = () => {
                 <Typography sx={{ fontSize:'28px', fontWeight:'500'}}>Potagers</Typography>
                 
                 <React.Fragment>
-                    <Button variant="outlined" onClick={handleClickOpenDelete} sx={{marginLeft:'auto',borderColor:'#00523D','&:hover': {
+                    <Button variant="outlined" onClick={() => setOpenDelete(true)}  sx={{marginLeft:'auto',borderColor:'#00523D','&:hover': {
                     backgroundColor: '#00523D',
                     borderColor: '#00432E', // Couleur de la bordure lors du survol
                     color: '#FFFFFF', // Couleur du texte lors du survol
@@ -246,7 +276,7 @@ const Dashboard = () => {
                     </Button>
                     <Dialog
                         open={openDelete}
-                        onClose={handleCloseDelete}
+                        onClose={() => setOpenDelete(false)}
                         aria-labelledby="alert-dialog-title"
                         aria-describedby="alert-dialog-description"
                     >
@@ -259,12 +289,12 @@ const Dashboard = () => {
                         </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                        <Button onClick={handleCloseDelete} sx={{marginLeft:'auto',borderColor:'#00523D','&:hover': {
+                        <Button onClick={() => setOpenDelete(false)} sx={{marginLeft:'auto',borderColor:'#00523D','&:hover': {
                             backgroundColor: '#00523D',
                             borderColor: '#00432E', // Couleur de la bordure lors du survol
                             color: '#FFFFFF', // Couleur du texte lors du survol
                             }, color:'#00523D'}}>Annuler</Button>
-                        <Button onClick={handleCloseDelete} sx={{background:'red',color:'white','&:hover':{background:'red',color:'white'}}} autoFocus>
+                        <Button onClick={handleDelete} sx={{background:'red',color:'white','&:hover':{background:'red',color:'white'}}} autoFocus>
                             Oui
                         </Button>
                         </DialogActions>
@@ -272,17 +302,22 @@ const Dashboard = () => {
                     </React.Fragment>
             </div>
             
-            <div style={{ height:400, width:'100%', marginTop:'20px' }}>
+            <div style={{ height:'60vh', width:'100%', marginTop:'20px' , background:'white'}}>
                 <DataGrid
                     rows={rows}
                     columns={columns}
+                    onRowClick={(params) => setSelectedRowId(params.id_potager)}
+                    getRowId={(row) => row.id_potager} // Utilisez `id_potager` comme identifiant
                     initialState={{
                     pagination: {
-                        paginationModel: { page: 0, pageSize: 5 },
+                        paginationModel: { page: 0, pageSize: 10 },
                     },
                     }}
                     pageSizeOptions={[10, 20]}
                     checkboxSelection
+                    onSelectionModelChange={(newSelection) => {
+                      setSelectedRowId(newSelection[0]);
+                    }}
                 />
                 </div>
                 
@@ -293,7 +328,7 @@ const Dashboard = () => {
                     backgroundColor: '#00523D',
                     borderColor: '#00432E', // Couleur de la bordure lors du survol
                     color: '#FFFFFF', // Couleur du texte lors du survol
-                    }, marginTop:'200px'}} variant="contained" href="#contained-buttons" startIcon={<AddIcon />} onClick={handleClickOpenAdd}>
+                    }, marginTop:2}} variant="contained" href="#contained-buttons" startIcon={<AddIcon />} onClick={handleClickOpenAdd}>
                                 Ajouter
                 </Button>
                 <Dialog
@@ -301,14 +336,7 @@ const Dashboard = () => {
                     onClose={handleCloseAdd}
                     PaperProps={{
                     component: 'form',
-                    onSubmit: (event) => {
-                        event.preventDefault();
-                        const formData = new FormData(event.currentTarget);
-                        const formJson = Object.fromEntries(formData.entries());
-                        const email = formJson.email;
-                        console.log(email);
-                        handleCloseAdd();
-                    },
+                    onSubmit: handleSubmit,
                     }}
                 >
                     <DialogTitle>Ajouter un Potager</DialogTitle>
@@ -317,8 +345,8 @@ const Dashboard = () => {
                             autoFocus
                             required
                             margin="dense"
-                            id="nomPotager"
-                            name="nomPotager"
+                            id="nom_potager"
+                            name="nom_potager"
                             label="Nom Potager"
                             type="text"
                             fullWidth
@@ -434,8 +462,8 @@ const Dashboard = () => {
                             autoFocus
                             required
                             margin="dense"
-                            id="motDePasse"
-                            name="motDePasse"
+                            id="mot_de_passe"
+                            name="mot_de_passe"
                             label="Mot de passe"
                             type="password"
                             fullWidth
@@ -457,8 +485,8 @@ const Dashboard = () => {
                             autoFocus
                             required
                             margin="dense"
-                            id="prenomProprietaire"
-                            name="prenomProprietaire"
+                            id="prenom_proprietaire"
+                            name="prenom_proprietaire"
                             label="Prenom Proprietaire"
                             type="text"
                             fullWidth
@@ -480,8 +508,8 @@ const Dashboard = () => {
                             autoFocus
                             required
                             margin="dense"
-                            id="nomProprietaire"
-                            name="nomProprietaire"
+                            id="nom_proprietaire"
+                            name="nom_proprietaire"
                             label="Nom Proprietaire"
                             type="text"
                             fullWidth
